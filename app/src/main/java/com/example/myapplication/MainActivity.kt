@@ -18,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
 
     private lateinit var productAdapter: ProductAdapter
+    var productService: ProductService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,5 +66,19 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Error de red", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    fun obtenerListadoProductos(productos: List<Product>): String {
+        return if (productos.isNotEmpty()) {
+            productos.joinToString(separator = "\n") { producto ->
+                "ID: ${producto.id}, Nombre: ${producto.name}"
+            }
+        } else {
+            "No hay productos disponibles"
+        }
+    }
+
+    fun setProductService(productService: ProductService) {
+        this.productService = productService
     }
 }
